@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uuid'
+
 class Image < ApplicationRecord
   validates :name, presence: true
   validates :canonical_id, presence: true

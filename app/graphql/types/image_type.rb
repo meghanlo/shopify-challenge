@@ -2,6 +2,8 @@
 
 module Types
   class ImageType < Types::BaseObject
+    graphql_name 'Image'
+
     field :image_url, String, null: false
     field :canonical_id, String, null: false
     field :name, String, null: false
