@@ -26,6 +26,22 @@ RSpec.describe Image, type: :model do
   end
 
   describe 'checks_validity' do
+    describe 'canonical_id' do
+      subject { FactoryBot.build(:image, canonical_id: canonical_id) }
+
+      let(:canonical_id) { 'valid_canonical_id' }
+
+      context 'with canonical_id' do
+        it { is_expected.to be_valid }
+      end
+
+      context 'with no canonical_id it should automatically genereate' do
+        let(:canonical_id) { nil }
+
+        it { is_expected.to be_valid }
+      end
+    end
+
     describe 'name' do
       subject { FactoryBot.build(:image, name: name) }
 

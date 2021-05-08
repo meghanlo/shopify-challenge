@@ -21,12 +21,11 @@ RSpec.describe Types::ImageType, type: :request do
       <<-GRAPHQL
       query($id: ID!) {
         image(id: $id) {
-          canonicalId
+          id
           name
+          altText
           imageUrl
-          tags {
-            tagName
-          }
+          tags
         }#{' '}
       }
       GRAPHQL
@@ -34,14 +33,11 @@ RSpec.describe Types::ImageType, type: :request do
 
     let(:expected_output) do
       {
-        canonicalId: image1.canonical_id,
+        id: image1.canonical_id,
         name: image1.name,
         imageUrl: image1.image_url,
-        tags: [
-          {
-            tagName: tag_mocks[0].tag_name
-          }
-        ]
+        altText: image1.alt_text,
+        tags: [tag_mocks[0].tag_name]
       }
     end
 
@@ -94,13 +90,13 @@ RSpec.describe Types::ImageType, type: :request do
   context 'by image name' do
     let(:query) do
       <<-GRAPHQL
-      query($name: String) {
+      query($name: String!) {
         images(name: $name) {
+          id
           name
+          altText
           imageUrl
-          tags {
-            tagName
-          }
+          tags
         }
       }
       GRAPHQL
@@ -108,13 +104,11 @@ RSpec.describe Types::ImageType, type: :request do
 
     let(:expected_output) do
       {
+        id: image1.canonical_id,
         name: image1.name,
+        altText: image1.alt_text,
         imageUrl: image1.image_url,
-        tags: [
-          {
-            tagName: tag_mocks[0].tag_name
-          }
-        ]
+        tags: [tag_mocks[0].tag_name]
       }
     end
 
@@ -169,32 +163,30 @@ RSpec.describe Types::ImageType, type: :request do
       <<-GRAPHQL
       query($tags: [String!]!) {
         images(tags: $tags) {
+          id
           name
+          altText
           imageUrl
-          tags {
-            tagName
-          }
+          tags
         }
       }
       GRAPHQL
     end
 
     let(:expected_output) do
-      [{ name: image1.name,
-         imageUrl: image1.image_url,
-         tags: [
-           {
-             tagName: tag_mocks[0].tag_name
-           }
-         ] },
+      [{
+        id: image1.canonical_id,
+        name: image1.name,
+        altText: image1.alt_text,
+        imageUrl: image1.image_url,
+        tags: [tag_mocks[0].tag_name]
+      },
        {
+         id: image2.canonical_id,
          name: image2.name,
+         altText: image2.alt_text,
          imageUrl: image2.image_url,
-         tags: [
-           {
-             tagName: tag_mocks[0].tag_name
-           }
-         ]
+         tags: [tag_mocks[0].tag_name]
        }]
     end
 
