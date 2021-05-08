@@ -7,6 +7,7 @@ module Types
     field :image_url, String, null: false
     field :alt_text, String, null: true
     field :image_url, String, null: false
+    field :user, UserType, null: true, method: :user
     field :tags, [String], null: true
 
     def image_url

@@ -19,9 +19,12 @@ module Mutations
           content_type: file.content_type
         )
 
-        image = Image.new(args.slice(:name, :alt_text, :image_file))
+        record_data = args.slice(:name, :alt_text, :image_file)
+        record_data[:user] = context[:current_user]
+
+        image = Image.new(record_data)
         args[:tags]&.each do |tag|
-          image.tags << ImageTag.create!(image: image, tag_name: tag)
+          image.tags << ImageTag.new(image: image, tag_name: tag)
         end
         image.save!
 
