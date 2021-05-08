@@ -3,7 +3,7 @@
 module Types
   class QueryType < Types::BaseObject
     field :image, Types::ImageType, null: false, description: 'Find image by image canonical id', null: true do
-      argument :id, String, required: true
+      argument :id, ID, required: true
     end
 
     field :images, [Types::ImageType], null: false, description: 'Find images by name or tags', null: true do

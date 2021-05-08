@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class CreateImageMutation < BaseMutation
     argument :name, String, required: true
@@ -19,7 +21,7 @@ module Mutations
 
         image = Image.new(args.slice(:name, :alt_text, :image_file))
         args[:tags]&.each do |tag|
-          image.tags << ImageTag.new(image: image, tag_name: tag)
+          image.tags << ImageTag.create!(image: image, tag_name: tag)
         end
         image.save!
 

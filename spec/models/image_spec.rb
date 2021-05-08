@@ -58,17 +58,23 @@ RSpec.describe Image, type: :model do
       end
     end
 
-    describe 'image url' do
-      subject { FactoryBot.build(:image, image_url: image_url) }
+    describe 'image file' do
+      context 'using active storage' do
+        subject { FactoryBot.build(:image).image_file }
 
-      let(:image_url) { '/Sunset.jpg' }
+        context 'is attached' do
+          it { is_expected.to be_an_instance_of(ActiveStorage::Attached::One) }
+        end
+      end
 
-      context 'with image url' do
+      context 'with stubbing file' do
+        subject { FactoryBot.build(:image) }
+
         it { is_expected.to be_valid }
       end
 
-      context 'with no image url' do
-        let(:image_url) { nil }
+      context 'without stubbing file' do
+        subject { FactoryBot.build(:image, :no_image_file) }
 
         it { is_expected.not_to be_valid }
       end

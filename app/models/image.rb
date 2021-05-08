@@ -13,11 +13,17 @@ class Image < ApplicationRecord
 
   before_validation :assign_canonical_id!
 
+  validate :check_file_presence!
+
   def assign_canonical_id!
     self.canonical_id ||= generate_canonical_id
   end
 
   def generate_canonical_id
     "image_canonical-#{UUID.generate}"
+  end
+
+  def check_file_presence!
+    errors.add(:image_file, 'no file added') unless image_file.attached?
   end
 end

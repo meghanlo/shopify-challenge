@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class UpdateImageMutation < BaseMutation
     argument :id, ID, required: true
