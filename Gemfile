@@ -37,6 +37,7 @@ end
 gem 'factory_bot_rails'
 gem 'graphql', '1.11.6'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'apollo_upload_server', '2.0.1'
 
 group :development, :test do
   gem 'graphiql-rails'

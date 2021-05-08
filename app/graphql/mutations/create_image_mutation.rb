@@ -1,7 +1,7 @@
 module Mutations
   class CreateImageMutation < BaseMutation
     argument :name, String, required: true
-    argument :image_url, String, required: true
+    argument :image_file, ApolloUploadServer::Upload, required: true
     argument :alt_text, String, required: false
     argument :tags, [String], required: false
 
@@ -10,7 +10,14 @@ module Mutations
 
     def resolve(args)
       ActiveRecord::Base.transaction do
-        image = Image.new(args.slice(:name, :image_url, :alt_text))
+        file = args[:image_file]
+        args[:image_file] = ActiveStorage::Blob.create_and_upload!(
+          io: file,
+          filename: file.original_filename,
+          content_type: file.content_type
+        )
+
+        image = Image.new(args.slice(:name, :alt_text, :image_file))
         args[:tags]&.each do |tag|
           image.tags << ImageTag.new(image: image, tag_name: tag)
         end
