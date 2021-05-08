@@ -34,6 +34,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'apollo_upload_server', '2.0.1'
 gem 'factory_bot_rails'
 gem 'graphql', '1.11.6'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

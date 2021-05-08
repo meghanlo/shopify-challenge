@@ -35,7 +35,7 @@ RSpec.describe Types::ImageType, type: :request do
       {
         id: image1.canonical_id,
         name: image1.name,
-        imageUrl: image1.image_url,
+        imageUrl: rails_blob_path(image1.image_file, only_path: true),
         altText: image1.alt_text,
         tags: [tag_mocks[0].tag_name]
       }
@@ -107,7 +107,7 @@ RSpec.describe Types::ImageType, type: :request do
         id: image1.canonical_id,
         name: image1.name,
         altText: image1.alt_text,
-        imageUrl: image1.image_url,
+        imageUrl: rails_blob_path(image1.image_file, only_path: true),
         tags: [tag_mocks[0].tag_name]
       }
     end
@@ -178,14 +178,14 @@ RSpec.describe Types::ImageType, type: :request do
         id: image1.canonical_id,
         name: image1.name,
         altText: image1.alt_text,
-        imageUrl: image1.image_url,
+        imageUrl: rails_blob_path(image1.image_file, only_path: true),
         tags: [tag_mocks[0].tag_name]
       },
        {
          id: image2.canonical_id,
          name: image2.name,
          altText: image2.alt_text,
-         imageUrl: image2.image_url,
+         imageUrl: rails_blob_path(image2.image_file, only_path: true),
          tags: [tag_mocks[0].tag_name]
        }]
     end
