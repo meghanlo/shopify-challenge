@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uuid'
 
 class Image < ApplicationRecord
@@ -5,8 +7,7 @@ class Image < ApplicationRecord
   validates :canonical_id, presence: true
   validates :image_url, presence: true
 
-  has_many :tags, class_name: 'ImageTag', foreign_key: :image_id, inverse_of: :image,
-                  dependent: :restrict_with_exception
+  has_many :tags, class_name: 'ImageTag', inverse_of: :image, dependent: :restrict_with_exception
 
   before_validation :assign_canonical_id!
 

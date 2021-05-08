@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :image do
     sequence(:name) { |n| "Image-#{n}" }
     sequence(:image_url) { |n| "/image-#{n}" }
     sequence(:canonical_id) { |n| "canonical-#{n}" }
     created_at { 2.days.ago }
-    updated_at { 1.days.ago }
+    updated_at { 1.day.ago }
 
     transient do
       stub_tags { true }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Image, type: :model do
@@ -24,7 +26,7 @@ RSpec.describe Image, type: :model do
   end
 
   describe 'checks_validity' do
-    describe 'name' do
+    describe 'canonical_id' do
       subject { FactoryBot.build(:image, canonical_id: canonical_id) }
 
       let(:canonical_id) { 'valid_canonical_id' }
@@ -43,42 +45,42 @@ RSpec.describe Image, type: :model do
     describe 'name' do
       subject { FactoryBot.build(:image, name: name) }
 
-      let(:name) {"Sunset"}
+      let(:name) { 'Sunset' }
 
       context 'with name' do
-        it { is_expected.to be_valid}
+        it { is_expected.to be_valid }
       end
 
       context 'with no name' do
-        let (:name) {nil}
+        let(:name) { nil }
 
-        it { is_expected.not_to be_valid}
+        it { is_expected.not_to be_valid }
       end
     end
 
     describe 'image url' do
       subject { FactoryBot.build(:image, image_url: image_url) }
 
-      let(:image_url) {"/Sunset.jpg"}
+      let(:image_url) { '/Sunset.jpg' }
 
       context 'with image url' do
-        it { is_expected.to be_valid}
+        it { is_expected.to be_valid }
       end
 
       context 'with no image url' do
-        let (:image_url) {nil}
+        let(:image_url) { nil }
 
-        it { is_expected.not_to be_valid}
+        it { is_expected.not_to be_valid }
       end
     end
 
     describe 'alt text' do
       subject { FactoryBot.build(:image, alt_text: alt_text) }
 
-      let(:alt_text) {nil}
+      let(:alt_text) { nil }
 
       context 'with no alt text' do
-        it { is_expected.to be_valid}
+        it { is_expected.to be_valid }
       end
     end
 
@@ -93,13 +95,13 @@ RSpec.describe Image, type: :model do
       end
 
       context 'with image tags' do
-        it { is_expected.to be_valid}
+        it { is_expected.to be_valid }
       end
 
       context 'with no image tags' do
-        let (:tag_mocks) { [] }
+        let(:tag_mocks) { [] }
 
-        it { is_expected.to be_valid}
+        it { is_expected.to be_valid }
       end
     end
   end
