@@ -94,3 +94,8 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 end
+
+def response_json
+  result = JSON.parse(response.body)
+  result.deep_symbolize_keys
+end
