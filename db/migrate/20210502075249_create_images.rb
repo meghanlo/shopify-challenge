@@ -9,6 +9,6 @@ class CreateImages < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :images, :canonical_id, unique: true, name: 'index_image_url'
+    add_index :images, :canonical_id, unique: true, name: 'index_image_canonical_id'
   end
 end
