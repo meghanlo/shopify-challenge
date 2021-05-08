@@ -17,16 +17,20 @@ ActiveRecord::Schema.define(version: 2021_05_02_075318) do
 
   create_table "image_tags", force: :cascade do |t|
     t.integer "image_id", null: false
-    t.string "tag", null: false
+    t.string "tag_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["image_id", "tag"], name: "index_image_tags", unique: true
+    t.index ["image_id", "tag_name"], name: "index_image_tags", unique: true
   end
 
   create_table "images", force: :cascade do |t|
-    t.string "image_url"
+    t.string "canonical_id", null: false
+    t.string "image_url", null: false
+    t.string "name", null: false
+    t.string "alt_text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["image_url"], name: "index_image_url", unique: true
   end
 
 end
