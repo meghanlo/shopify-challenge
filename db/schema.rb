@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_05_02_075318) do
   end
 
   create_table "images", force: :cascade do |t|
+    t.string "canonical_id", null: false
     t.string "image_url", null: false
     t.string "name", null: false
     t.string "alt_text"
