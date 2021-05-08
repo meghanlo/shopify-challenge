@@ -26,7 +26,7 @@ RSpec.describe Image, type: :model do
   end
 
   describe 'checks_validity' do
-    describe 'name' do
+    describe 'canonical_id' do
       subject { FactoryBot.build(:image, canonical_id: canonical_id) }
 
       let(:canonical_id) { 'valid_canonical_id' }
