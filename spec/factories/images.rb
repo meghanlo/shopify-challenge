@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :image do
+    user
     sequence(:name) { |n| "Image-#{n}" }
     sequence(:canonical_id) { |n| "canonical-#{n}" }
     created_at { 2.days.ago }

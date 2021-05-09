@@ -29,28 +29,39 @@ class GraphqlController < ApplicationController
 
   # gets current user from token stored in the session
   def current_user
-    # if we want to change the sign-in strategy, this is the place to do it
+    unless session[:token]
+      token = request.headers['Authorization']
+      return unless valid_token(token)
+
+      session[:token] = token
+    end
     return unless session[:token]
 
-    crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify session[:token]
-    user_id = token.gsub('user-id:', '').to_i
+    token = session[:token]
+    head :forbidden unless valid_token(token)
+    token.gsub!('Bearer ', '')
+
+    decoded_token = JWT.decode token, nil, false
+    decoded_token = decoded_token[0].deep_symbolize_keys
+    user_id = decoded_token[:id]
     User.find user_id
-
-    # exp = Time.now.to_i + 4 * 3600
-    # payload = {
-    #   id: user.id,
-    #   canonical_id: user.canonical_id,
-    #   email: user.email,
-    #   exp: exp
-    # }
-
-    # token = JWT.decode session[:token], nil, false
-
-    # user_id = token[:id]
-    # User.find_by!(id: user_id)
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     nil
+  end
+
+  def valid_token(token)
+    return false unless token
+
+    token.gsub!('Bearer ', '')
+
+    begin
+      decoded_token = JWT.decode token, nil, false
+
+      return true
+    rescue JWT::DecodeError => e
+      Rails.logger.warn 'Error decoding the JWT: ' + e.to_s
+    end
+    false
   end
 
   # Handle variables in form data, JSON body, or a blank value

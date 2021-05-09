@@ -100,3 +100,10 @@ def response_json
   result = JSON.parse(response.body)
   result.deep_symbolize_keys
 end
+
+def mock_header_request(user)
+  payload = {
+    id: user.id
+  }
+  token = JWT.encode payload, nil, 'none'
+end

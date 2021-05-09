@@ -13,6 +13,7 @@ module Mutations
     def resolve(args)
       ActiveRecord::Base.transaction do
         image = Image.find_by!(canonical_id: args[:id])
+        authorize_allow_owner!(image.user)
         image.update!(args.slice(:name, :alt_text))
 
         if args[:tags]

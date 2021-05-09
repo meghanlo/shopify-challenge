@@ -5,12 +5,18 @@ require 'spec_helper'
 
 RSpec.describe Mutations::CreateImageMutation, type: :request do
   def go!
-    post '/graphql', params: { query: query, variables: variables }
+    post '/graphql', params: { query: query, variables: variables }, headers: { 'HTTP_AUTHORIZATION' => mock_header }
   end
 
   let(:imageFile) do
     Rack::Test::UploadedFile.new(Rails.root.join(file_fixture('photo.jpeg')), 'image/jpeg')
   end
+
+  let(:mock_header) do
+    mock_header_request(user)
+  end
+
+  let(:user) { FactoryBot.create(:user) }
 
   let(:imageUrl) do
     rails_blob_path(imageFile, only_path: true)
