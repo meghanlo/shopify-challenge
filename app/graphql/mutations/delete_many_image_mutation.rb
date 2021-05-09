@@ -11,6 +11,7 @@ module Mutations
       ActiveRecord::Base.transaction do
         args[:id]&.each do |canonical_id|
           image = Image.find_by!(canonical_id: canonical_id)
+          authorize_allow_owner!(image.user)
           image.tags.destroy_all
           image.image_file.purge
           image.destroy!

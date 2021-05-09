@@ -5,11 +5,15 @@ require 'spec_helper'
 
 RSpec.describe Mutations::DeleteImageMutation, type: :request do
   def go!
-    post '/graphql', params: { query: query, variables: variables }
+    post '/graphql', params: { query: query, variables: variables }, headers: { 'HTTP_AUTHORIZATION' => mock_header }
   end
 
   let(:image) do
     FactoryBot.create(:image, name: 'image1', alt_text: 'alt_Text')
+  end
+
+  let(:mock_header) do
+    mock_header_request(image.user)
   end
 
   let(:query) do
@@ -70,6 +74,35 @@ RSpec.describe Mutations::DeleteImageMutation, type: :request do
         {
           input: {
             name: 'updated input name'
+          }
+        }
+      end
+
+      it 'returns errors' do
+        go!
+        expect(response_json[:errors]).to be_truthy
+      end
+
+      it 'does not creates the image ' do
+        expect { go! }.not_to change(Image, :count)
+      end
+
+      it 'does not creates the image tags' do
+        expect { go! }.not_to change(ImageTag, :count)
+      end
+    end
+
+    context 'without proper authorization' do
+      let(:non_owner_user) { FactoryBot.create(:user) }
+
+      let(:mock_header) do
+        mock_header_request(non_owner_user)
+      end
+
+      let(:variables) do
+        {
+          input: {
+            id: image.canonical_id
           }
         }
       end
