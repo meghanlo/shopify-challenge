@@ -27,6 +27,7 @@ RSpec.configure do |config|
     #     # => "be bigger than 2 and smaller than 4"
     # ...rather than:
     #     # => "be bigger than 2"
+    expectations.max_formatted_output_length = 1_000_000
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
@@ -98,4 +99,11 @@ end
 def response_json
   result = JSON.parse(response.body)
   result.deep_symbolize_keys
+end
+
+def mock_header_request(user)
+  payload = {
+    id: user.id
+  }
+  token = JWT.encode payload, nil, 'none'
 end

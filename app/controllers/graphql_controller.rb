@@ -13,6 +13,8 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
+      session: session,
+      current_user: current_user
     }
     result = ShopifyChallengeSchema.execute(query, variables: variables, context: context,
                                                    operation_name: operation_name)
@@ -24,6 +26,43 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  # gets current user from token stored in the session
+  def current_user
+    unless session[:token]
+      token = request.headers['Authorization']
+      return unless valid_token(token)
+
+      session[:token] = token
+    end
+    return unless session[:token]
+
+    token = session[:token]
+    head :forbidden unless valid_token(token)
+    token.gsub!('Bearer ', '')
+
+    decoded_token = JWT.decode token, nil, false
+    decoded_token = decoded_token[0].deep_symbolize_keys
+    user_id = decoded_token[:id]
+    User.find user_id
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  def valid_token(token)
+    return false unless token
+
+    token.gsub!('Bearer ', '')
+
+    begin
+      decoded_token = JWT.decode token, nil, false
+
+      return true
+    rescue JWT::DecodeError => e
+      Rails.logger.warn 'Error decoding the JWT: ' + e.to_s
+    end
+    false
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

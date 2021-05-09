@@ -19,11 +19,13 @@ module Mutations
           content_type: file.content_type
         )
 
-        image = Image.new(args.slice(:name, :alt_text, :image_file))
+        record_data = args.slice(:name, :alt_text, :image_file)
+        record_data[:user] = context[:current_user]
+
+        image = Image.create!(record_data)
         args[:tags]&.each do |tag|
           image.tags << ImageTag.create!(image: image, tag_name: tag)
         end
-        image.save!
 
       rescue ActiveRecord::RecordInvalid => e
         { errors: e.record.errors.map { |error| { field: error.attribute, value: error.full_message } } }

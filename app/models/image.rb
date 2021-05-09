@@ -7,6 +7,7 @@ class Image < ApplicationRecord
   validates :name, presence: true
   validates :canonical_id, presence: true
 
+  belongs_to :user
   has_many :tags, class_name: 'ImageTag', inverse_of: :image, dependent: :restrict_with_exception
 
   has_one_attached :image_file, dependent: :destroy
