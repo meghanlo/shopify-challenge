@@ -28,6 +28,8 @@ All images are considered public and users can access all images that are create
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delete an image](#delete-an-image)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Delele multiple images](#delete-multiple-images)
 
+[Notes and Areas of Improvement](#notes-and-areas-of-improvement)  
+
 ## Setup
 
 To run this repo locally.
@@ -539,7 +541,8 @@ mutation {
 }
 ```
 
-### Small Notes
+### Notes and Areas of Improvement
 * Improve searching with wildcards
 * Improve images query to include AND operation
 * Update searching so that it is not case sensitive
+* Give the user the option for their image to be public of not
