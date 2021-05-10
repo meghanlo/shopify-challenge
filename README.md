@@ -19,8 +19,8 @@ All images are considered public and users can access all images that are create
 
 [Setup](#setup)  
 [Types](#types)
-[Queries](#queries)
-[Mutations](#mutations)  
+[Queries (with examples)](#queries)
+[Mutations (with examples)](#mutations)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create a user](#create-a-user)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Sign in a user](#sign-in-a-user)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Create an image](#create-an-image)  
@@ -39,11 +39,33 @@ git clone https://github.com/meghanlo/shopify-challenge.git
 cd shopify-challenge/
 ```
 
-2.
+2. (Optional) Run the `setup_shopify.cmd` file to install any missing dependecies
+
+3. `gem install bundler`
+4. `bundle install`
+5. `bundle exec rake db:setup`
+6. `bundle exec rails rspec`
+7. Start the server `bin/rails server`
+8. Download [Insomnia](https://insomnia.rest/download)
+9. Open insomnia and go to `http://localhost:3000/graphql`
+
+#### Tests
+
+To run tests:
+`bundle exec rails rspec`
 
 ## Types
 
 #### User
+
+Fields
+
+```GraphQL
+email: String!
+id: ID!
+  canonical id of the user
+name: String!
+```
 
 #### Image
 
@@ -65,6 +87,13 @@ user: User
 ```
 
 #### Errors
+
+Fields
+
+```GraphQL
+field: String!
+value: String!
+```
 
 ## Queries
 
@@ -236,10 +265,14 @@ mutation {
 #### Sign in a user
 **POST** `/graphql`
 
+User must sign in and use the given token to do any mutations
+
 Input Fields
 
 ```GraphQL
-
+credentials: AUTH_PROVIDER_CREDENTIALS
+  email: String!
+  password: String!
 ```
 
 **Query**
@@ -280,10 +313,15 @@ mutation {
 
 Since we are uploading files - a multipart form is used
 
+The user must be signed in to upload an image
+
 Input Fields
 
 ```GraphQL
-
+name: String!
+imageFile: Upload!
+altText: String
+tags: [String!]
 ```
 
 **Query**
@@ -425,6 +463,8 @@ mutation {
 #### Delete an image
 **POST** `/graphql`
 
+Only the owner of an image (the user who created the image) is allowed to delete the image
+
 Input Fields
 
 ```GraphQL
@@ -462,6 +502,8 @@ mutation {
 <br/>
 #### Delete Multiple Images
 **POST** `/graphql`
+
+Only the owner of an image (the user who created the image) is allowed to delete the image
 
 Input Fields
 
