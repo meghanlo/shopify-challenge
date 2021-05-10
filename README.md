@@ -308,7 +308,7 @@ mutation {
 ```
 
 <br/>
-#### Create an image
+#### Create an Image
 **POST** `/graphql`
 
 Since we are uploading files - a multipart form is used
@@ -365,7 +365,7 @@ mutation ($name: String!, $tags: [String]!, $imageFile: Upload!) {
 
 Using Insomnia, map the variable to the image file to be uploaded
 
-!image[]
+![image](https://user-images.githubusercontent.com/37924402/117597658-e7ab2e00-b0fa-11eb-8a22-9333dacf767b.png)
 
 **JSON response**
 
@@ -460,8 +460,8 @@ mutation {
 ```
 
 <br/>
-#### Delete an image
-**POST** `/graphql`
+#### Delete an Image
+**POST** `/graphql``
 
 Only the owner of an image (the user who created the image) is allowed to delete the image
 
