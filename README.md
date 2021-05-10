@@ -214,7 +214,7 @@ query {
 
 ## Mutations
 
-####Create a user
+#### Create a user
 **POST** `/graphql`
 
 Input Fields
@@ -228,7 +228,7 @@ tags: [String!]
 
 **Query**
 
-```JSON
+```GraphQL
 mutation {
   createUserMutation (input: {name: "Meghan Lo", authProvider: { credentials: { email: "example@email.com", password: "SecurePassword" } } } ) {
     user{
