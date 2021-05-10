@@ -14,6 +14,6 @@ class User < ApplicationRecord
   end
 
   def generate_canonical_id
-    "image_canonical-#{UUID.generate}"
+    "user_canonical-#{UUID.generate}"
   end
 end

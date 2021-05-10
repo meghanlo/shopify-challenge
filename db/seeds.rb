@@ -8,7 +8,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+user1 = User.create!(
+  name: 'Meghan Lo',
+  email: 'example@email.com',
+  password: 'SecurePassword'
+)
+
+user2 = User.create!(
+  name: 'Luke Skywalker',
+  email: 'jedi@email.com',
+  password: 'TheseAreNotTheDroidsYoureLookingFor'
+)
+
 sunset_image = Image.new(
+  user: user1,
   name: 'sunset',
   alt_text: 'toronto skyline during sunset',
   created_at: 2.days.ago,
@@ -24,6 +37,7 @@ sunset_image.tags << ImageTag.create!(image: sunset_image, tag_name: 'orange', c
 sunset_image.save!
 
 ocean_image = Image.new(
+  user: user1,
   name: 'ocean',
   created_at: 2.days.ago,
   updated_at: 2.days.ago
@@ -39,6 +53,7 @@ ocean_image.tags << ImageTag.create!(image: ocean_image, tag_name: 'water', crea
 ocean_image.save!
 
 baby_yoda = Image.new(
+  user: user2,
   name: 'Baby Yoda - Star Wars',
   alt_text: 'Grogu holding a cup',
   created_at: 10.days.ago,
