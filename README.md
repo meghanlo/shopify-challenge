@@ -149,7 +149,7 @@ query {
 2. Find images by name or tags
    `images(name: String, tags: [String!]): [Image!]`
 
-The following exmaple uses tags to search for images, but it also accepts `name`
+The following exmaple uses tags to search for images, but it also accepts `name`. When searching by multiple tags, the search performns an OR search.
 
 ```GRAPHQL
 query {
@@ -538,3 +538,8 @@ mutation {
   }
 }
 ```
+
+### Small Notes
+* Improve searching with wildcards
+* Improve images query to include AND operation
+* Update searching so that it is not case sensitive
