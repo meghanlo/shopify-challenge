@@ -261,7 +261,7 @@ mutation {
 }
 ```
 
-<br/>
+
 #### Sign in a user
 **POST** `/graphql`
 
@@ -307,7 +307,7 @@ mutation {
 }
 ```
 
-<br/>
+
 #### Create an Image
 **POST** `/graphql`
 
@@ -393,7 +393,6 @@ Using Insomnia, map the variable to the image file to be uploaded
 }
 ```
 
-<br/>
 #### Update an Image
 **POST** `/graphql`
 
@@ -459,7 +458,6 @@ mutation {
 }
 ```
 
-<br/>
 #### Delete an Image
 **POST** `/graphql``
 
@@ -499,7 +497,7 @@ mutation {
 }
 ```
 
-<br/>
+
 #### Delete Multiple Images
 **POST** `/graphql`
 
